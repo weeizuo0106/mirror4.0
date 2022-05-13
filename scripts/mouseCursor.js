@@ -20,6 +20,7 @@ LeapElement.prototype = {
             return this.dom.removeChild(element);
         } else {
             return this.dom.removeChild(element.getDom());
+            
         }
     },
     getID: function() {
