@@ -29,7 +29,7 @@ function parseCalendarData(response) {
     calendarEventsArr = [];
 
     var jsonResponse = JSON.parse(response);
-    console.log(jsonResponse);
+    // console.log(jsonResponse);
 
     // assign calendar email to variable
     calendarEmail = jsonResponse.summary;

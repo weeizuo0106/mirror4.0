@@ -4,7 +4,7 @@ var alarmString = null;
 const alarmAudio = document.getElementById("alarm-audio");
 
 // Select DOM element with create-alarm id
-const createAlarm = document.querySelector(".create-alarm");
+const createAlarm = document.querySelector("create-alarm");
 
 // Select DOM element of active alarm container
 const activeAlarm = document.getElementById("active-alarm");
@@ -13,14 +13,15 @@ const clearAlarm = document.getElementById("clear-alarm");
 // Select DOM element of active alarm text
 const alarmTextContainer = document.getElementById("alarm-text");
 
-const alarmText = (time) => `Alarm set at time ${time}`;
+const alarmText = (time) => `Alarm set at tformime ${time}`;
 
 // Initialize alarm sound
 alarmAudio.src = "audio/alarm.mp3";
 alarmAudio.load();
 
 // Handle Create Alarm submit
-const handleSubmit = (event) => {
+const handleSubmit = (event) => 
+{
   // Prevent default action of reloading the page
   event.preventDefault();
   const { hour, sec, min, zone } = document.forms[0];
@@ -39,7 +40,8 @@ const handleSubmit = (event) => {
   alarmTextContainer.innerHTML = alarmText(alarmString);
 };
 
-const handleClear = () => {
+const handleClear = () => 
+{
   alarmString = "";
   activeAlarm.style.display = "none";
   createAlarm.style.display = "block";
@@ -84,8 +86,7 @@ const renderTime = () => {
   currentTime.innerHTML = timeString;
 };
 
-//Function Snooze alarm
-const 
+
 
 // Update time every second
 setInterval(renderTime, 1000);
