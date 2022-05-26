@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <meta http-equiv="Content-Security-Policy" 
+        content="script-src 'self'; object-src 'none'; style-src cdn.example.org third-party.org; child-src https:"> -->
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+       
+        <title>Testing Youtube Search with voice control</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+        <style>
+        .paginate {
+            margin-right: 5px;
+        }
+        li {
+            display: inline-block;
+        }
+        </style>
+    </head>
+    <body>
+        <form id="yt-form">
+            <p><button type="button" onclick="runSpeechRecognition()">Speech to Text</button></p>
+            <p><input type="text" id="keyword-input" placeholder="Enter keyword" required></p>
+            <p><span id="action"></span></p>
+            <div id="output" class="hide"></div>
+            <div style="display:none;">
+                <input type="number" id="maxresult-input" placeholder="Max Results" min="1" max="50" value="6" required>
+            <p>
+                <select id="order-input" required>
+                    <option value="">--SELECT ORDER--</option>
+                    <option value="date">Date</option>
+                    <option value="rating">Rating</option>
+                    <option value="relevance">Relevance</option>
+                    <option value="title">Title</option>
+                    <option value="viewCount" selected>View Count</option>
+                </select>
+            </p>
+            </div>
+            <p>
+                <input type="submit" value="Submit">
+            </p>
+        </form>
+       
+        <div id="videoListContainer"></div>
+       
+        <script src="https://apis.google.com/js/api.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+        <script src="js/testYoutubeSearch.js"></script>
+        
+        <script>
+            function runSpeechRecognition() {
+		        // get output div reference
+		        var output = document.getElementById("output");
+		        // get action element reference
+		        var action = document.getElementById("action");
+                // new speech recognition object
+                var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+                var recognition = new SpeechRecognition();
+            
+                // This runs when the speech recognition service starts
+                recognition.onstart = function() {
+                    action.innerHTML = "<small>listening, please speak...</small>";
+                };
+                
+                recognition.onspeechend = function() {
+                    action.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                    recognition.stop();
+                }
+              
+                // This runs when the speech recognition service returns result
+                recognition.onresult = function(event) {
+                    var transcript = event.results[0][0].transcript;
+                    var confidence = event.results[0][0].confidence;
+                    $("#keyword-input").val(transcript);
+                    //output.innerHTML = "<b>Text:</b> " + transcript;
+                    execute();
+                };
+              
+                 // start recognition
+                 recognition.start();
+	        }
+        </script>
+    </body>
+</html>
